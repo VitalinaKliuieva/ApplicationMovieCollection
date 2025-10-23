@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Movies library</title>
+        <link th:href="@{/main.css}" rel="stylesheet" />
+
+    </head>
+    <body>
+        <div class="heading">
+            <h1>Movies library</h1>
+        </div>
+        <button id="addBtn" class="addBtn">Add movie</button>
+
+        <div id="addModal" class="addModal" >
+            <div class="modal-content">
+                <h2>Fill the form to add a new movie</h2>
+                <form  class="addition form" action="#" th:action="@{/movies}" method="post" th:object="${movie}">
+                    <div >
+                        <label for="name">Title: </label>
+                        <input type="text" name="name" id="name" required />
+                    </div>
+
+                    <div >
+                        <label for="date">Date: </label>
+                        <input type="text" name="date" id="date" required />
+                    </div>
+
+                    <div >
+                        <label for="genre">Genre: </label>
+                        <input type="text" name="genre" id="genre" required />
+                    </div>
+
+                    <div >
+                        <label for="director">Director: </label>
+                        <input type="text" name="director" id="director" required />
+                    </div>
+
+                    <div  >
+                        <label for="actors" >Actors: </label>
+                        <label>
+                            <select id="actors" name="actorIds"  multiple="multiple">
+                                <option th:each="actor : ${actors}" th:value="${actor.id}" th:text="${actor.name}" >
+                                    </option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <div >
+                        <label for="description">Description: </label>
+                        <input type="text" name="description" id="description" required/>
+                    </div>
+
+                    <div >
+                        <label for="streamingPlatforms">Streaming platform: </label>
+                        <label>
+                            <select id="streamingPlatforms" name="streamingPlatformIds" class="form-control" multiple="multiple">
+                                <option th:each="streamingPlatform : ${streamingPlatforms}" th:value="${streamingPlatform.id}"
+                                        th:text="${streamingPlatform.name}" >
+                                </option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <div >
+                        <label for="rating">Rating: </label>
+                        <input type="number" name="rating" id="rating" required />
+                    </div>
+
+                    <div >
+                        <label for="image">Image url: </label>
+                        <input type="url" name="image" id="image" required />
+                    </div>
+
+                    <div >
+                        <input type="submit" value="Save" class="submission"/>
+                    </div>
+
+                </form>
+                <div><button id="closeAdd">Close</button></div>
+            </div>
+        </div>
+        <div class="movie-list">
+        <div th:each="movie : ${movies}" class="movie">
+            <img th:src="${movie.image}"  alt="Movie picture"/>
+            <div class="description">
+                <h2 th:text="${movie.name}"></h2>
+                <p th:text="${movie.description}"></p>
+                <p><strong>Year:</strong> <span th:text="${movie.date}"></span></p>
+                <p><strong>Genre:</strong> <span th:text="${movie.genre}"></span></p>
+                <p><strong>Director:</strong><span th:text="${movie.director}"></span></p>
+                <p><strong>Actors list:</strong><span th:each="direct : ${movie.actors}"><span th:text="${direct.name}"></span></span></p>
+                <p><strong>Streaming platform:</strong><span th:each="direct : ${movie.streamingPlatforms}"><span th:text="${direct.name}"></span></span></p>
+                <p><strong>Rating:</strong> <span th:text="${movie.rating}"></span></p>
+
+                <button  class="deleteBtn">Delete movie</button>
+                <div id="deleteModal" class="deleteModal">
+                    <div class="delete-modal-content">
+                        <p>Are you really want to delete this movie?</p>
+                        <p>Click <strong>Delete</strong>, if yes.</p>
+                        <form th:action="@{/movies/delete}" method="post" th:object="${movie.id}">
+                            <input type="hidden" name="id" th:value="${movie.id}" />
+                            <button type="submit">Delete</button>
+
+                        </form>
+                        <div>
+                            <button  class="closeDlt">Close</button>
+                        </div>
+
+                    </div>
+                </div>
+
+                <button id="editBtn" class="editBtn">Edit movie</button>
+
+                <div id="editModal" class="editModal" >
+                    <div class="editModal-content">
+                        <h2>Fill the form to edit a new movie</h2>
+                        <form  class="editing form" action="#" th:action="@{/movies/edit}" method="post" th:object="${movie}" >
+                            <input type="hidden" name="id" th:value="${movie.id}" />
+                            <div >
+                                <label for="nameEdit">Title: </label>
+                                <input type="text" name="name" id="nameEdit" required th:value="${movie.name}"
+                                       placeholder="Enter name" />
+                            </div>
+
+                            <div >
+                                <label for="dateEdit">Date: </label>
+                                <input type="text" name="date" id="dateEdit" required th:value="${movie.date}"
+                                       placeholder="Enter date"/>
+                            </div>
+
+                            <div >
+                                <label for="genreEdit">Genre: </label>
+                                <input type="text" name="genre" id="genreEdit" required th:value="${movie.genre}"
+                                       placeholder="Enter genre"/>
+                            </div>
+
+                            <div >
+                                <label for="directorEdit">Director: </label>
+                                <input type="text" name="director" id="directorEdit" required th:value="${movie.director}"
+                                       placeholder="Enter director" />
+                            </div>
+
+                            <div  >
+                                <label for="actorsEdit" >Actors: </label>
+                                <label>
+                                    <select id="actorsEdit" name="actorIds"  multiple="multiple"  >
+                                        <option value="">Please select actors</option>
+                                        <option th:each="actor : ${actors}" th:value="${actor.id}" th:text="${actor.name}" >
+                                        </option>
+                                    </select>
+                                </label>
+                            </div>
+
+                            <div >
+                                <label for="descriptionEdit">Description: </label>
+                                <input type="text" name="description" id="descriptionEdit" required th:value="${movie.description}"
+                                       placeholder="Enter description"/>
+                            </div>
+
+                            <div >
+                                <label for="streamingPlatformsEdit">Streaming platform: </label>
+                                <label>
+                                    <select id="streamingPlatformsEdit" name="streamingPlatformIds" class="form-control" multiple="multiple" >
+                                        <option value="">Please select a streaming platform</option>
+                                        <option th:each="streamingPlatform : ${streamingPlatforms}" th:value="${streamingPlatform.id}"
+                                                th:text="${streamingPlatform.name}" >
+                                        </option>
+                                    </select>
+                                </label>
+                            </div>
+
+                            <div >
+                                <label for="ratingEdit">Rating: </label>
+                                <input type="number" name="rating" id="ratingEdit" required th:value="${movie.rating}"
+                                       placeholder="Enter rating"/>
+                            </div>
+
+                            <div >
+                                <label for="imageEdit">Image url: </label>
+                                <input type="url" name="image" id="imageEdit" required th:value="${movie.image}"
+                                       placeholder="Enter image"/>
+                            </div>
+
+                            <div >
+                                <input type="submit" value="Save" class="submission"/>
+                            </div>
+
+                        </form>
+                        <div>
+                            <button class="closeEdit">Close</button>
+                        </div>
+                    </div>
+            </div>
+            </div>
+        </div>
+        </div>
+    </body>
+    <script th:src="@{/main.js}"></script>
+</html>
