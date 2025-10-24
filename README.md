@@ -60,8 +60,8 @@ Database Layer (H2 In-Memory Database)
 ### Option 1: Using Maven Wrapper (Recommended)
 ```bash
 # Clone the repository
-git clone https://github.com/VitalinaKliuieva/FilmReviewerApplication
-cd MovieCollectionApplication
+git clone https://github.com/VitalinaKliuieva/ApplicationMovieCollection.git
+cd ApplicationMovieCollection
 
 # Run the application
 ./mvnw spring-boot:run
@@ -79,7 +79,7 @@ mvn clean spring-boot:run
 ./mvnw clean package
 
 # Run the JAR file
-java -jar target/MovieLibraryApplication-0.0.1-SNAPSHOT.jar
+java -jar target/ApplicationMovieCollection-0.0.1-SNAPSHOT.jar
 ```
 
 ## Access the Application
